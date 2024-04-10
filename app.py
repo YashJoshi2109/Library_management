@@ -1,3 +1,4 @@
+import awsgi
 from flask import Flask, render_template, request, redirect, url_for, session
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -58,5 +59,5 @@ def logout():
     return redirect(url_for('login'))
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+def lambda_handler(event, context):
+    return awsgi.response(app, event, context, base64_content_types={"image/png"})
